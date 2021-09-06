@@ -17,7 +17,7 @@ To get a local copy, follow these simple example steps.
 
 ### Prerequisites
 
-A computer with a working and up to date web browser.
+A computer with at least 4GB ram.
 
 ### Setup
 
