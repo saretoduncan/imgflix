@@ -44,10 +44,21 @@
 
 
     <EditText
-        android:id="@+id/second_attempt"
+        android:id="@+id/first_attempt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/edRegMail"
+        android:layout_marginTop="10dp"
+        android:autofillHints="testHint"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+
+        />
+    <EditText
+        android:id="@+id/second_attempt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/first_attempt"
         android:layout_marginTop="10dp"
         android:autofillHints="testHint"
         android:hint="@string/confirm_password"
