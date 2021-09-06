@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:padding="10dp"
     android:layout_height="match_parent">
+
     <TextView
         android:id="@+id/application_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
         android:fontFamily="@font/aguafina_script"
-        android:textColor="@color/darkPurple"
         android:text="@string/app_name"
+        android:textColor="@color/darkPurple"
 
-        android:textSize="48sp" />
+        android:textSize="48sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <TextView
         android:id="@+id/tvCreateMail"
         android:layout_width="wrap_content"
@@ -30,33 +35,23 @@
         android:id="@+id/edRegMail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvCreateMail"
         android:layout_marginTop="10dp"
+        android:layout_below="@id/tvCreateMail"
+        android:autofillHints="testHint"
         android:hint="@string/email"
         android:inputType="textEmailAddress"
-        android:autofillHints=""
+        android:minHeight="48dp"/>
 
-        />
-    <EditText
-        android:id="@+id/edFirstPass"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/edRegMail"
-        android:layout_marginTop="10dp"
-        android:hint="@string/password"
-        android:inputType="textPassword"
-        android:autofillHints=""
 
-        />
     <EditText
         android:id="@+id/second_attempt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/edFirstPass"
+        android:layout_below="@+id/edRegMail"
         android:layout_marginTop="10dp"
+        android:autofillHints="testHint"
         android:hint="@string/confirm_password"
         android:inputType="textPassword"
-        android:autofillHints=""
 
         />
     <Button

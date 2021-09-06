@@ -5,5 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".DisplayImages">
+    <ListView
+        android:id="@+id/lvListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="15dp"
+        android:divider="#fff"
+        android:dividerHeight="15dp"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
