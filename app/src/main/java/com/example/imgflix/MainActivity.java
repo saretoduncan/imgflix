@@ -18,16 +18,19 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
-@SuppressLint("NonConstantResourceId")
-@BindView(R.id.signUp) TextView signup;
-@SuppressLint("NonConstantResourceId")
-@BindView(R.id.loginButton) Button loginButton;
-@SuppressLint("NonConstantResourceId")
-@BindView(R.id.edEmail) EditText email;
-@SuppressLint("NonConstantResourceId")
-@BindView(R.id.edPassword) EditText password;
-
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.signUp)
+    TextView signup;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.loginButton)
+    Button loginButton;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.edEmail)
+    EditText email;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.edPassword)
+    EditText password;
 
 
     @Override
@@ -35,29 +38,29 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        signup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        signup.setOnClickListener(this);
+        loginButton.setOnClickListener(this);
+    }
 
-                Intent intent = new Intent(MainActivity.this, NewAccount.class);
+    @Override
+    public void onClick(View view) {
+        if (view.getId() == signup.getId()) {
+            Intent intent = new Intent(MainActivity.this, NewAccount.class);
+            startActivity(intent);
+        }
+        else if (view.getId() == loginButton.getId()) {
+            boolean checkValidation = Validation.isEmailAddress(email, true);
+
+            String mPassword = password.getText().toString();
+            if (mPassword.length() == 0) {
+                password.setError("password required");
+            }
+            if (checkValidation && mPassword.length() > 0) {
+                Intent intent = new Intent(MainActivity.this, DisplayImages.class);
+                Toast.makeText(MainActivity.this, "login success", Toast.LENGTH_SHORT).show();
                 startActivity(intent);
             }
-        });
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                boolean checkValidation = Validation.isEmailAddress(email,true) ;
 
-                String mPassword= password.getText().toString();
-                if(mPassword.length()==0){
-                    password.setError("password required");
-                }
-                if(checkValidation && mPassword.length()>0){
-                    Intent intent = new Intent(MainActivity.this, DisplayImages.class);
-                    Toast.makeText(MainActivity.this, "login success", Toast.LENGTH_SHORT).show();
-                    startActivity(intent);
-          }
-            }
-        });
+        }
     }
 }

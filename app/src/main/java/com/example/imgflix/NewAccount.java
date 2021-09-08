@@ -13,7 +13,7 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class NewAccount extends AppCompatActivity {
+public class NewAccount extends AppCompatActivity implements View.OnClickListener {
 @SuppressLint("NonConstantResourceId")
 @BindView(R.id.signUpButton) TextView signUp;
 @SuppressLint("NonConstantResourceId")
@@ -22,31 +22,39 @@ public class NewAccount extends AppCompatActivity {
 @BindView(R.id.first_attempt) EditText firstPassword;
 @SuppressLint("NonConstantResourceId")
 @BindView(R.id.second_attempt) EditText confirmPassword;
+@SuppressLint("NonConstantResourceId")
+@BindView(R.id.log_in) TextView login;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_newaccount);
         ButterKnife.bind(this);
-        signUp.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onClick(View view) {
-            boolean validateEmail= Validation.isEmailAddress(registrationEmail, true);
-            if(firstPassword.length()==0){
-                firstPassword.setText("required");
-            }
-            if (confirmPassword.length()==0){
-                confirmPassword.setError("required");
-            }
-            if(!confirmPassword.getText().toString().equals(firstPassword.getText().toString())){
-                confirmPassword.setError("password do not match");
-            }
-            if(validateEmail&&confirmPassword.getText().toString().equals(firstPassword.getText().toString())) {
-                Intent intent = new Intent(NewAccount.this, MainActivity.class);
-                Toast.makeText(NewAccount.this, "signup successful", Toast.LENGTH_SHORT).show();
-                startActivity(intent);
-            }
-            }
-        });
+        signUp.setOnClickListener(this);
+        login.setOnClickListener(this);
+
+    }
+
+    @Override
+    public void onClick(View view) {
+      if(view.getId()==signUp.getId()){
+          boolean validateEmail= Validation.isEmailAddress(registrationEmail, true);
+          if(firstPassword.length()==0){
+              firstPassword.setText("required");
+          }
+          if (confirmPassword.length()==0){
+              confirmPassword.setError("required");
+          }
+          if(!confirmPassword.getText().toString().equals(firstPassword.getText().toString())){
+              confirmPassword.setError("password do not match");
+          }
+          if(validateEmail&&confirmPassword.getText().toString().equals(firstPassword.getText().toString())) {
+              Intent intent = new Intent(NewAccount.this, MainActivity.class);
+              Toast.makeText(NewAccount.this, "signup successful", Toast.LENGTH_SHORT).show();
+              startActivity(intent);
+          }
+      } else if (view.getId() == login.getId()) {
+          Intent intent= new Intent(NewAccount.this, MainActivity.class);
+          startActivity(intent);
+      }
     }
 }
