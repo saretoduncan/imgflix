@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.imgflix">
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -11,13 +12,13 @@
         android:theme="@style/Theme.ImgFlix"
         >
         <activity
-            android:name=".DisplayImages"
+            android:name=".ui.DisplayImages"
             android:exported="true" />
         <activity
-            android:name=".NewAccount"
+            android:name=".ui.NewAccount"
             android:exported="true" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

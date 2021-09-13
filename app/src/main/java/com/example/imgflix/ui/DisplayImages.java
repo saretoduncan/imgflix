@@ -1,10 +1,13 @@
-package com.example.imgflix;
+package com.example.imgflix.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.widget.ListView;
+
+import com.example.imgflix.adapters.MyAdapter;
+import com.example.imgflix.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

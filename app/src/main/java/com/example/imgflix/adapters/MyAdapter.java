@@ -1,4 +1,4 @@
-package com.example.imgflix;
+package com.example.imgflix.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.imgflix.R;
 
 public class MyAdapter extends BaseAdapter {
     private Context context;

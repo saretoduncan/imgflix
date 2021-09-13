@@ -1,4 +1,4 @@
-package com.example.imgflix;
+package com.example.imgflix.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.imgflix.R;
+import com.example.imgflix.Validation;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
