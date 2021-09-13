@@ -34,6 +34,7 @@ public class NewAccount extends AppCompatActivity implements View.OnClickListene
 
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onClick(View view) {
       if(view.getId()==signUp.getId()){
