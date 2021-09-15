@@ -1,13 +1,20 @@
 package com.example.imgflix.ui;
 
+import static com.example.imgflix.network.UnsplashClient.getClient;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -39,6 +46,7 @@ public class DisplayImages extends AppCompatActivity {
  @BindView(R.id.errorTextView) TextView errorText;
  @SuppressLint("NonConstantResourceId")
  @BindView(R.id.progressBar) ProgressBar progressBar;
+ @BindView(R.id.swiper) SwipeRefreshLayout swipeRefreshLayout;
 
 
     @Override
@@ -48,37 +56,49 @@ public class DisplayImages extends AppCompatActivity {
         ButterKnife.bind(this);
 //        listView.setAdapter(new MyAdapter(this, names, images));
 
-        UnsplashPhotosApi client = UnsplashClient.getClient();
-        String clientId = Constants.UNSPLASH_API_KEY;
-        Call<List<UnsplashPhotoListResponse>> call = client.getImages(clientId);
-       call.enqueue(new Callback<List<UnsplashPhotoListResponse>>() {
-           @Override
-           public void onResponse(@NonNull Call<List<UnsplashPhotoListResponse>> call, Response<List<UnsplashPhotoListResponse>> response) {
-               hideProgressBar();
-               if(response.isSuccessful()){
-                 List<UnsplashPhotoListResponse> images = response.body();
-                 adapter = new MyAdapter(DisplayImages.this, images);
-                 recyclerView.setAdapter(adapter);
-                 RecyclerView.LayoutManager layoutManager= new LinearLayoutManager(DisplayImages.this);
-                 recyclerView.setLayoutManager(layoutManager);
-                 recyclerView.setHasFixedSize(true);
+            Call<List<UnsplashPhotoListResponse>> call = getApiCall();
 
-                 showImagesContent();
-               }else {
-                   showUnSuccessfulMessage();
-               }
-           }
+            call.enqueue(new Callback<List<UnsplashPhotoListResponse>>() {
+                @Override
+                public void onResponse(@NonNull Call<List<UnsplashPhotoListResponse>> call, Response<List<UnsplashPhotoListResponse>> response) {
+                    hideProgressBar();
+                    if (response.isSuccessful()) {
+                        List<UnsplashPhotoListResponse> images = response.body();
+                        adapter = new MyAdapter(DisplayImages.this, images);
+                        recyclerView.setAdapter(adapter);
+                        RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL);
+                        recyclerView.setLayoutManager(layoutManager);
+                        recyclerView.setHasFixedSize(true);
 
-           @Override
-           public void onFailure(Call<List<UnsplashPhotoListResponse>> call, Throwable t) {
-               hideProgressBar();
-               showFailureMessage();
+                        showImagesContent();
+                    } else {
+                        showUnSuccessfulMessage();
+                    }
+                }
 
-           }
-       });
+                @Override
+                public void onFailure(Call<List<UnsplashPhotoListResponse>> call, Throwable t) {
+                    hideProgressBar();
+                    showFailureMessage();
 
+                }
+            });
+            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                Intent intent = getIntent();
+                finish();
+                startActivity(intent);
 
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+            });
     }
+
+
+
+
+
     @SuppressLint("SetTextI18n")
     private void showFailureMessage(){
         errorText.setText("Something went wrong. Please check your internet connection");
@@ -96,4 +116,12 @@ public class DisplayImages extends AppCompatActivity {
         progressBar.setVisibility(View.GONE);
 
     }
+    private Call<List<UnsplashPhotoListResponse>> getApiCall(){
+        UnsplashPhotosApi client = getClient();
+        String clientId = Constants.UNSPLASH_API_KEY;
+        Call<List<UnsplashPhotoListResponse>> call = client.getImages(clientId, "1", "30");
+        return call;
+
+    }
+
 }

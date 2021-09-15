@@ -9,7 +9,9 @@ import com.example.imgflix.models.User;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
 
+@Parcel
 public class UnsplashPhotoListResponse {
 
     @SerializedName("id")
@@ -45,9 +47,7 @@ public class UnsplashPhotoListResponse {
     @SerializedName("user")
     @Expose
     private User user;
-    @SerializedName("current_user_collections")
-    @Expose
-    private List<CurrentUserCollection> currentUserCollections = null;
+
     @SerializedName("urls")
     @Expose
     private Urls urls;
@@ -92,7 +92,7 @@ public class UnsplashPhotoListResponse {
         this.likedByUser = likedByUser;
         this.description = description;
         this.user = user;
-        this.currentUserCollections = currentUserCollections;
+
         this.urls = urls;
         this.links = links;
     }
@@ -185,13 +185,7 @@ public class UnsplashPhotoListResponse {
         this.user = user;
     }
 
-    public List<CurrentUserCollection> getCurrentUserCollections() {
-        return currentUserCollections;
-    }
 
-    public void setCurrentUserCollections(List<CurrentUserCollection> currentUserCollections) {
-        this.currentUserCollections = currentUserCollections;
-    }
 
     public Urls getUrls() {
         return urls;
@@ -259,7 +253,7 @@ public class UnsplashPhotoListResponse {
         sb.append(',');
         sb.append("currentUserCollections");
         sb.append('=');
-        sb.append(((this.currentUserCollections == null)?"<null>":this.currentUserCollections));
+
         sb.append(',');
         sb.append("urls");
         sb.append('=');

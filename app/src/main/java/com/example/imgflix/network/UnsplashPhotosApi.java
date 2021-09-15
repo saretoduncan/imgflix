@@ -11,7 +11,9 @@ import retrofit2.http.Query;
 public interface UnsplashPhotosApi {
     @GET("photos")
     Call<List<UnsplashPhotoListResponse>>getImages(
-            @Query("client_id") String client_id
+            @Query("client_id") String client_id,
+            @Query("page") String page,
+            @Query("per_page") String per_page
     );
 
 
