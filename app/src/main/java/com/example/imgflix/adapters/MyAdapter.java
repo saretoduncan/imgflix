@@ -27,6 +27,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyAdapterViewHolder> {
  private List<UnsplashPhotoListResponse> imgDetails;
@@ -60,6 +61,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyAdapterViewHolde
       @BindView(R.id.imImageView) ImageView imageView;
       @SuppressLint("NonConstantResourceId")
       @BindView(R.id.tvImgTxt) TextView textView;
+      @SuppressLint("NonConstantResourceId")
+      @BindView(R.id.cardProfilePic) CircleImageView profilePicture;
        private Context context;
        public MyAdapterViewHolder(View view){
            super(view);
@@ -70,7 +73,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyAdapterViewHolde
        @SuppressLint("SetTextI18n")
        public void bindImages(UnsplashPhotoListResponse img){
            Picasso.get().load(img.getUrls().getRegular()).into(imageView);
-           textView.setText("By "+img.getUser().getName());
+           Picasso.get().load(img.getUser().getProfileImage().getMedium()).into(profilePicture);
+           textView.setText(img.getUser().getName());
        }
         @Override
         public void onClick(View view){
