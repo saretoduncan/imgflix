@@ -1,6 +1,7 @@
 package com.example.imgflix.ui;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -88,6 +89,14 @@ private UnsplashPhotoListResponse images;
         instaName.setText("@"+images.getUser().getInstagramUsername());
         description.setText(images.getDescription());
         likes.setText(images.getLikes().toString());
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                startActivity(Intent.createChooser(sharingIntent, "Share via"));
+
+            }
+        });
         return view;
     }
 }
