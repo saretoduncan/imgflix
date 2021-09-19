@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "879181215291",
+    "firebase_url": "https://imgflix-f476b-default-rtdb.firebaseio.com",
+    "project_id": "imgflix-f476b",
+    "storage_bucket": "imgflix-f476b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:879181215291:android:55edcc5dd3f78038630e1e",
+        "android_client_info": {
+          "package_name": "com.example.imgflix"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "879181215291-bpt0ddreilojc75ibthft8l1a4gg5ojm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.imgflix",
+            "certificate_hash": "19ea45e7034f4ae6474065fdca2c8f0e8894bcd0"
+          }
+        },
+        {
+          "client_id": "879181215291-k68f3maj2laf5381u2ocjivfplj88f3t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTkq_vWf_4OzAvShyqXs0L6bLAUsuIuAA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "879181215291-k68f3maj2laf5381u2ocjivfplj88f3t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
