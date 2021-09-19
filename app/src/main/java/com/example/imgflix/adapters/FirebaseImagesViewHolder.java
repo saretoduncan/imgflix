@@ -41,6 +41,7 @@ public class FirebaseImagesViewHolder extends RecyclerView.ViewHolder implements
         TextView profileName = (TextView) view.findViewById(R.id.tvImgTxt);
         Picasso.get().load(images.getUser().getProfileImage().getMedium()).into(profilePic);
         Picasso.get().load(images.getUrls().getRegular()).into(fullImg);
+        profileName.setText(images.getUser().getName());
     }
 
     @Override

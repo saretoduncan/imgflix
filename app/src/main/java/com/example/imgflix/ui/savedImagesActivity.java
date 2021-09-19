@@ -1,4 +1,4 @@
-package com.example.imgflix;
+package com.example.imgflix.ui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.imgflix.Constants;
+import com.example.imgflix.R;
 import com.example.imgflix.adapters.FirebaseImagesViewHolder;
 import com.example.imgflix.adapters.MyAdapter;
 import com.example.imgflix.models.UnsplashPhotoListResponse;
@@ -61,7 +63,7 @@ public class savedImagesActivity extends AppCompatActivity {
             @NonNull
             @Override
             public FirebaseImagesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_display_images, parent, false);//inflate correct layout for display
+                View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.card, parent, false);//inflate correct layout for display
                 return new FirebaseImagesViewHolder(mView);
 
             }

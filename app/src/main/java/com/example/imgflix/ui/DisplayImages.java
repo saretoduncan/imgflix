@@ -13,6 +13,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -29,6 +32,7 @@ import com.example.imgflix.network.UnsplashPhotosApi;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.Inflater;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,6 +51,7 @@ public class DisplayImages extends AppCompatActivity {
  @SuppressLint("NonConstantResourceId")
  @BindView(R.id.progressBar) ProgressBar progressBar;
  @BindView(R.id.swiper) SwipeRefreshLayout swipeRefreshLayout;
+
 
 
     @Override
@@ -95,8 +100,22 @@ public class DisplayImages extends AppCompatActivity {
             });
     }
 
-
-
+@Override
+public  boolean onCreateOptionsMenu(Menu menu){
+    MenuInflater inflater = getMenuInflater();
+    inflater.inflate(R.menu.menu_main, menu);
+    return super.onCreateOptionsMenu(menu);
+}
+@Override
+public boolean onOptionsItemSelected(MenuItem item){
+        int id = item.getItemId();
+        if(id == R.id.savedItems){
+            Intent intent = new Intent(DisplayImages.this, savedImagesActivity.class);
+            startActivity(intent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+}
 
 
     @SuppressLint("SetTextI18n")
