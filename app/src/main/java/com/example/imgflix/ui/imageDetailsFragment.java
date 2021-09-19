@@ -1,6 +1,7 @@
 package com.example.imgflix.ui;
 
 import android.annotation.SuppressLint;
+import android.app.usage.ConfigurationStats;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -10,12 +11,17 @@ import android.os.Parcel;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.imgflix.Constants;
 import com.example.imgflix.R;
 import com.example.imgflix.models.UnsplashPhotoListResponse;
 import com.example.imgflix.network.UnsplashPhotosApi;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
@@ -42,7 +48,8 @@ private UnsplashPhotoListResponse images;
 @BindView(R.id.tvFragProf)
     TextView userName;
 @BindView(R.id.viewsNumbers) TextView likes;
-
+@BindView(R.id.saveButton)
+    Button  saveBtn;
 @BindView(R.id.share) TextView share;
 @SuppressLint("NonConstantResourceId")
 @BindView(R.id.insta) TextView instaName;
@@ -95,6 +102,16 @@ private UnsplashPhotoListResponse images;
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 startActivity(Intent.createChooser(sharingIntent, "Share via"));
 
+            }
+        });
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatabaseReference imageRef= FirebaseDatabase
+                        .getInstance()
+                        .getReference(Constants.FIREBASE_CHILD_IMAGES);
+                imageRef.push().setValue(images);
+                Toast.makeText(getContext(), "saved", Toast.LENGTH_SHORT).show();
             }
         });
         return view;
