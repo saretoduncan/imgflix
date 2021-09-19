@@ -1,8 +1,11 @@
 package com.example.imgflix.ui;
 
+import static androidx.fragment.app.FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -33,7 +36,7 @@ public class ImagesDetails extends AppCompatActivity {
         images = Parcels.unwrap(getIntent().getParcelableExtra("images"));
         int startingPosition= getIntent().getIntExtra("position",0);
 
-        pagerAdapter = new PagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT,images);
+        pagerAdapter = new PagerAdapter(getSupportFragmentManager(), BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT,images);
         viewPager.setAdapter(pagerAdapter);
         viewPager.setCurrentItem(startingPosition);
 
