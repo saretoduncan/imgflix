@@ -71,7 +71,7 @@
 <androidx.cardview.widget.CardView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="15dp">
+    app:cardCornerRadius="0dp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -81,15 +81,16 @@
                 <ImageView
                     android:id="@+id/frImageView"
                     android:layout_width="match_parent"
-                    android:layout_height="530dp"
-                    android:scaleType="centerCrop"
+                    android:layout_height="510dp"
+
                     android:src="@drawable/image2" />
 
 
                 <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingHorizontal="5dp">
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingHorizontal="5dp"
+                    android:layout_marginVertical="5dp">
 
                     <TextView
                         android:id="@+id/views"
@@ -124,26 +125,25 @@
                         android:id="@+id/share"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-
-                        android:layout_marginStart="10dp"
+                        android:layout_marginStart="3dp"
+                        android:layout_gravity="end"
                         android:layout_marginTop="10dp"
-                        android:layout_marginEnd="-14dp"
+                        android:layout_marginEnd="0dp"
                         android:layout_toEndOf="@+id/comments"
                         android:textSize="20sp"
                         app:drawableLeftCompat="@drawable/send" />
+                    <Button
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:textColor="@color/black"
+                            android:text="@string/save"
+                            android:background="@drawable/save_rounded"
 
+/>
                 </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/description"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:textAlignment="center"
-                    android:textStyle="bold"
 
-                    />
 
             </LinearLayout>
 </androidx.cardview.widget.CardView>

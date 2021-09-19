@@ -15,6 +15,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="views">Views</string>
     <string name="downloads">Downloads</string>
+    <string name="save">save</string>
 
 
 </resources>

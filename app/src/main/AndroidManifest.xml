@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ImgFlix">
         <activity
+            android:name=".savedImagesActivity"
+            android:exported="true" />
+        <activity
             android:name=".ui.ImagesDetails"
             android:exported="true" />
         <activity

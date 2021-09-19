@@ -42,7 +42,7 @@ private UnsplashPhotoListResponse images;
 @BindView(R.id.tvFragProf)
     TextView userName;
 @BindView(R.id.viewsNumbers) TextView likes;
-@BindView(R.id.description) TextView description;
+
 @BindView(R.id.share) TextView share;
 @SuppressLint("NonConstantResourceId")
 @BindView(R.id.insta) TextView instaName;
@@ -87,7 +87,7 @@ private UnsplashPhotoListResponse images;
         Picasso.get().load(images.getUser().getProfileImage().getMedium()).into(profilePic);
         userName.setText(images.getUser().getName());
         instaName.setText("@"+images.getUser().getInstagramUsername());
-        description.setText(images.getDescription());
+
         likes.setText(images.getLikes().toString());
         share.setOnClickListener(new View.OnClickListener() {
             @Override
