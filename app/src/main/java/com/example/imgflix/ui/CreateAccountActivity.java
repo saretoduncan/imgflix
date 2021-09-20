@@ -7,6 +7,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -84,6 +85,10 @@ ProgressBar progressBar;
         final String email = registrationEmail.getText().toString().trim();
         final String password = firstPassword.getText().toString().trim();
         final String passwordConfirmation= confirmPassword.getText().toString().trim();
+        boolean profileName = isValidName(name);
+        boolean profileEmail = isValidEmail(email);
+        boolean profilePassword = isValidPassword(password, passwordConfirmation);
+        if(!profileEmail || !profileName || !profilePassword) return;
 
         mAuth.createUserWithEmailAndPassword(email,password)
                 .addOnCompleteListener(this, task ->{
@@ -95,8 +100,30 @@ ProgressBar progressBar;
                 });
     }
     //validation
-    private boolean isValidEmail(String email){//
+    private boolean isValidEmail(String email){// email validation
+       boolean isCorrectMail = (email!=null && Patterns.EMAIL_ADDRESS.matcher(email).matches());
+       if(!isCorrectMail){
+           registrationEmail.setError("Please enter valid email");
+           return false;
+       }
 
+        return true;
+    }
+    private boolean isValidName(String name){//name validation
+        if(name.equals("")){
+            userName.setError("please enter your name");
+            return false;
+        }
+        return true;
+    }
+    private boolean isValidPassword(String password, String confirmationPassword){//password validation
+        if(password.length()<6){
+            firstPassword.setError("Password too short, please create a password containing at least 6 characters");
+            return false;
+        } else if(!password.equals(confirmationPassword)){
+            confirmPassword.setError("passwords do not match");
+            return false;
+        }
         return true;
     }
     //.....//
