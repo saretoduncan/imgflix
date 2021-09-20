@@ -17,6 +17,8 @@
     <string name="downloads">Downloads</string>
     <string name="save">save</string>
     <string name="saved_images">saved images</string>
+    <string name="name">Name</string>
+    <string name="logout">logout</string>
 
 
 </resources>

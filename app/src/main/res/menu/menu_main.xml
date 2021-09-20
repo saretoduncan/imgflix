@@ -7,5 +7,12 @@
        android:title="@string/saved_images"
        android:visible="true"
        />
+   <item
+       android:title="@string/logout"
+       app:showAsAction="never"
+       android:visible="true"
+       android:id="@+id/action_logout"
+
+      />
 
 </menu>

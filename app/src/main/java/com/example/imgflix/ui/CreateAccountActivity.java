@@ -1,22 +1,28 @@
 package com.example.imgflix.ui;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.imgflix.R;
-import com.example.imgflix.Validation;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class CreateAccountActivity extends AppCompatActivity implements View.OnClickListener {
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
 @SuppressLint("NonConstantResourceId")
 @BindView(R.id.signUpButton) TextView signUp;
 @SuppressLint("NonConstantResourceId")
@@ -27,40 +33,84 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
 @BindView(R.id.second_attempt) EditText confirmPassword;
 @SuppressLint("NonConstantResourceId")
 @BindView(R.id.log_in) TextView login;
+@SuppressLint("NonConstantResourceId")
+@BindView(R.id.signUpProgressBar)
+ProgressBar progressBar;
+@SuppressLint("NonConstantResourceId")
+@BindView(R.id.edUserName) EditText userName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_newaccount);
         ButterKnife.bind(this);
+        mAuth= FirebaseAuth.getInstance();
+        createAuthStateListener();
         signUp.setOnClickListener(this);
         login.setOnClickListener(this);
 
     }
 
+    private void createAuthStateListener() {
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                final FirebaseUser user = firebaseAuth.getCurrentUser();
+                if(user != null){
+                    Intent intent = new Intent(CreateAccountActivity.this,MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        };
+    }
+
     @SuppressLint("SetTextI18n")
     @Override
     public void onClick(View view) {
-      if(view.getId()==signUp.getId()){
-          boolean validateEmail= Validation.isEmailAddress(registrationEmail, true);
-          if(firstPassword.length()==0){
-              firstPassword.setText("required");
-          }
-          if (confirmPassword.length()==0){
-              confirmPassword.setError("required");
-          }
-          if(!confirmPassword.getText().toString().equals(firstPassword.getText().toString())){
-              confirmPassword.setError("password do not match");
-          }
-          if(validateEmail&&confirmPassword.getText().toString().equals(firstPassword.getText().toString())) {
-              Intent intent = new Intent(CreateAccountActivity.this, loginActivity.class);
-              Toast.makeText(CreateAccountActivity.this, "signup successful", Toast.LENGTH_SHORT).show();
-              startActivity(intent);
-          }
-      } else if (view.getId() == login.getId()) {
-          Intent intent= new Intent(CreateAccountActivity.this, loginActivity.class);
+      if (view == login) {
+          Intent intent= new Intent(CreateAccountActivity.this, LoginActivity.class);
           intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-          finish();
           startActivity(intent);
+          finish();
       }
+      if (view == signUp){
+         createNewAccount();
+
+      }
+    }
+    private void createNewAccount(){ //create account method
+        final String name = userName.getText().toString().trim();
+        final String email = registrationEmail.getText().toString().trim();
+        final String password = firstPassword.getText().toString().trim();
+        final String passwordConfirmation= confirmPassword.getText().toString().trim();
+
+        mAuth.createUserWithEmailAndPassword(email,password)
+                .addOnCompleteListener(this, task ->{
+                    if(task.isSuccessful()){
+                        Log.d(CreateAccountActivity.class.getSimpleName(),"Authentication success");
+                    }else {
+                        Toast.makeText(CreateAccountActivity.this,"Registration Failed", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+    //validation
+    private boolean isValidEmail(String email){//
+
+        return true;
+    }
+    //.....//
+    @Override
+    public void onStart(){ //start db listening
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+
+    }
+    @Override
+    public void onStop(){ //stop db listening
+        super.onStop();
+        if(mAuthListener!=null){
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
     }
 }

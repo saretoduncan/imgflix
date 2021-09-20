@@ -30,13 +30,20 @@
         android:textColor="@color/black"
         android:fontFamily="@font/roboto"
         />
-
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edUserName"
+        android:hint="@string/name"
+        android:autofillHints="testHint"
+        android:layout_below="@+id/tvCreateMail"
+/>
     <EditText
         android:id="@+id/edRegMail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_below="@id/tvCreateMail"
+        android:layout_below="@id/edUserName"
         android:autofillHints="testHint"
         android:hint="@string/email"
         android:inputType="textEmailAddress"
@@ -104,5 +111,11 @@
         android:textSize="16sp"
         android:textColor="@color/darkPurple"
         android:textStyle="bold" />
-
+    <ProgressBar
+        android:id="@+id/signUpProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+/>
 </RelativeLayout>

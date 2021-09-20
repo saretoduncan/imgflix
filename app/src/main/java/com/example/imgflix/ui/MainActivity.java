@@ -24,6 +24,7 @@ import com.example.imgflix.adapters.MyAdapter;
 import com.example.imgflix.R;
 import com.example.imgflix.models.UnsplashPhotoListResponse;
 import com.example.imgflix.network.UnsplashPhotosApi;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
@@ -106,8 +107,20 @@ public boolean onOptionsItemSelected(MenuItem item){
             startActivity(intent);
             return true;
         }
+        if(id == R.id.action_logout){
+            logout();
+            return true;
+        }
         return super.onOptionsItemSelected(item);
 }
+
+    private void logout() {
+        FirebaseAuth.getInstance().signOut();
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
 
 
     @SuppressLint("SetTextI18n")

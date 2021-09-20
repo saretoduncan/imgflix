@@ -17,7 +17,7 @@ import com.example.imgflix.Validation;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class loginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.signUp)
     TextView signup;
@@ -44,8 +44,9 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
         if (view.getId() == signup.getId()) {
-            Intent intent = new Intent(loginActivity.this, CreateAccountActivity.class);
+            Intent intent = new Intent(LoginActivity.this, CreateAccountActivity.class);
             startActivity(intent);
+            finish();
         }
         else if (view.getId() == loginButton.getId()) {
             boolean checkValidation = Validation.isEmailAddress(email, true);
@@ -55,8 +56,8 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
                 password.setError("password required");
             }
             if (checkValidation && mPassword.length() > 0) {
-                Intent intent = new Intent(loginActivity.this, MainActivity.class);
-                Toast.makeText(loginActivity.this, "login success", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                Toast.makeText(LoginActivity.this, "login success", Toast.LENGTH_SHORT).show();
                 startActivity(intent);
             }
 
