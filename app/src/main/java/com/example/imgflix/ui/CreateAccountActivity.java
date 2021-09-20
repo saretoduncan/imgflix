@@ -16,7 +16,7 @@ import com.example.imgflix.Validation;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class NewAccount extends AppCompatActivity implements View.OnClickListener {
+public class CreateAccountActivity extends AppCompatActivity implements View.OnClickListener {
 @SuppressLint("NonConstantResourceId")
 @BindView(R.id.signUpButton) TextView signUp;
 @SuppressLint("NonConstantResourceId")
@@ -52,12 +52,14 @@ public class NewAccount extends AppCompatActivity implements View.OnClickListene
               confirmPassword.setError("password do not match");
           }
           if(validateEmail&&confirmPassword.getText().toString().equals(firstPassword.getText().toString())) {
-              Intent intent = new Intent(NewAccount.this, MainActivity.class);
-              Toast.makeText(NewAccount.this, "signup successful", Toast.LENGTH_SHORT).show();
+              Intent intent = new Intent(CreateAccountActivity.this, loginActivity.class);
+              Toast.makeText(CreateAccountActivity.this, "signup successful", Toast.LENGTH_SHORT).show();
               startActivity(intent);
           }
       } else if (view.getId() == login.getId()) {
-          Intent intent= new Intent(NewAccount.this, MainActivity.class);
+          Intent intent= new Intent(CreateAccountActivity.this, loginActivity.class);
+          intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+          finish();
           startActivity(intent);
       }
     }

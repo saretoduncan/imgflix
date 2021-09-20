@@ -18,13 +18,13 @@
             android:name=".ui.ImagesDetails"
             android:exported="true" />
         <activity
-            android:name=".ui.DisplayImages"
-            android:exported="true" />
-        <activity
-            android:name=".ui.NewAccount"
-            android:exported="true" />
-        <activity
             android:name=".ui.MainActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.CreateAccountActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.loginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
