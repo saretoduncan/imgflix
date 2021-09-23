@@ -54,6 +54,7 @@ public class UnsplashPhotoListResponse {
     @SerializedName("links")
     @Expose
     private Links__1 links;
+    private String pushId;
 
     /**
      * No args constructor for use in serialization
@@ -184,8 +185,12 @@ public class UnsplashPhotoListResponse {
     public void setUser(User user) {
         this.user = user;
     }
-
-
+    public void setPushId(String pushId){
+        this.pushId = pushId;
+    }
+    public String getPushId(){
+        return pushId;
+    }
 
     public Urls getUrls() {
         return urls;

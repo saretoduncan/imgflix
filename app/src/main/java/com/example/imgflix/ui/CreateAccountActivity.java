@@ -15,8 +15,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.imgflix.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
+
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,6 +29,7 @@ import butterknife.ButterKnife;
 public class CreateAccountActivity extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private String profileName;
 @SuppressLint("NonConstantResourceId")
 @BindView(R.id.signUpButton) TextView signUp;
 @SuppressLint("NonConstantResourceId")
@@ -81,21 +87,38 @@ ProgressBar progressBar;
       }
     }
     private void createNewAccount(){ //create account method
-        final String name = userName.getText().toString().trim();
+         profileName = userName.getText().toString().trim();
         final String email = registrationEmail.getText().toString().trim();
         final String password = firstPassword.getText().toString().trim();
         final String passwordConfirmation= confirmPassword.getText().toString().trim();
-        boolean profileName = isValidName(name);
+        boolean name = isValidName(profileName);
         boolean profileEmail = isValidEmail(email);
         boolean profilePassword = isValidPassword(password, passwordConfirmation);
-        if(!profileEmail || !profileName || !profilePassword) return;
-
+        if(!profileEmail || !name || !profilePassword) return;
+         showProgressBar();//show progress bar
         mAuth.createUserWithEmailAndPassword(email,password)
                 .addOnCompleteListener(this, task ->{
+                    hideProgressBar();//hide progress bar
                     if(task.isSuccessful()){
                         Log.d(CreateAccountActivity.class.getSimpleName(),"Authentication success");
+                        createFirebaseProfileName(Objects.requireNonNull(Objects.requireNonNull(task.getResult()).getUser()));
                     }else {
                         Toast.makeText(CreateAccountActivity.this,"Registration Failed", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+    private void  createFirebaseProfileName(FirebaseUser user){ //adding user name
+        UserProfileChangeRequest addProfileName = new UserProfileChangeRequest.Builder()
+                .setDisplayName(profileName)
+                .build();
+        user.updateProfile(addProfileName)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            Log.d(CreateAccountActivity.class.getSimpleName(), Objects.requireNonNull(user.getDisplayName()));
+
+                        }
                     }
                 });
     }
@@ -127,6 +150,13 @@ ProgressBar progressBar;
         return true;
     }
     //.....//
+    //progress bar
+    private void showProgressBar(){
+        progressBar.setVisibility(View.VISIBLE);
+    }
+    private void hideProgressBar(){
+        progressBar.setVisibility(View.GONE);
+    }
     @Override
     public void onStart(){ //start db listening
         super.onStart();

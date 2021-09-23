@@ -49,6 +49,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyAdapterViewHolde
     public void onBindViewHolder(@NonNull MyAdapter.MyAdapterViewHolder holder, int position) {
         holder.bindImages(imgDetails.get(position));
 
+
     }
 
 

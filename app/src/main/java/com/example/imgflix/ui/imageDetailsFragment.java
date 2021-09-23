@@ -20,6 +20,8 @@ import com.example.imgflix.Constants;
 import com.example.imgflix.R;
 import com.example.imgflix.models.UnsplashPhotoListResponse;
 import com.example.imgflix.network.UnsplashPhotosApi;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
@@ -107,10 +109,17 @@ private UnsplashPhotoListResponse images;
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                assert user != null;
+                String uid = user.getUid();
                 DatabaseReference imageRef= FirebaseDatabase
                         .getInstance()
-                        .getReference(Constants.FIREBASE_CHILD_IMAGES);
-                imageRef.push().setValue(images);
+                        .getReference(Constants.FIREBASE_CHILD_IMAGES)
+                        .child(uid);
+               DatabaseReference ref = imageRef.push();
+               String pushId = ref.getKey();
+               images.setPushId(pushId);
+               ref.setValue(images);
                 Toast.makeText(getContext(), "saved", Toast.LENGTH_SHORT).show();
             }
         });

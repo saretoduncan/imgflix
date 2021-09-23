@@ -1,5 +1,6 @@
 package com.example.imgflix.ui;
 
+import static android.content.ContentValues.TAG;
 import static com.example.imgflix.network.UnsplashClient.getClient;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,6 +27,7 @@ import com.example.imgflix.R;
 import com.example.imgflix.models.UnsplashPhotoListResponse;
 import com.example.imgflix.network.UnsplashPhotosApi;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 
@@ -35,7 +38,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
-
+private FirebaseAuth mAuth;
+private FirebaseAuth.AuthStateListener mAuthListener;
  @SuppressLint("NonConstantResourceId")
  @BindView(R.id.recyclerView) RecyclerView recyclerView;
  private MyAdapter adapter;
@@ -53,6 +57,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_display_images);
         ButterKnife.bind(this);
 //        listView.setAdapter(new MyAdapter(this, names, images));
+        mAuth= FirebaseAuth.getInstance();
+        mAuthListener= new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if(user!= null){
+                    getSupportActionBar().setTitle("Welcome, "+ user.getDisplayName())
+                    ;
+                }else Log.d(TAG, "not present");
+
+            }
+        };
 
             Call<List<UnsplashPhotoListResponse>> call = getApiCall();
 
@@ -147,5 +163,17 @@ public boolean onOptionsItemSelected(MenuItem item){
         return call;
 
     }
+@Override
+    public void onStart(){
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+}
+@Override
+    public void onStop(){
+        super.onStop();
+        if(mAuthListener!= null){
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
+}
 
 }
