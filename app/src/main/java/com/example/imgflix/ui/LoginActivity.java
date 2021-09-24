@@ -76,24 +76,29 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             startActivity(intent);
             finish();
         }
-        if (view.getId() == loginButton.getId()) {
-            boolean checkValidation = Validation.isEmailAddress(email, true);
-            String mEmail= email.getText().toString().trim();
-            String mPassword = password.getText().toString().trim();
-            if (mPassword.length() == 0) {
-                password.setError("password required");
-            }
-            if (checkValidation && mPassword.length() > 0) {
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                Toast.makeText(LoginActivity.this, "login success", Toast.LENGTH_SHORT).show();
-                startActivity(intent);
-            }
-            auth.signInWithEmailAndPassword(mEmail,mPassword)
+        if (view == loginButton) {
+            loginWithPass();
+            showProgressBar();
+        }
+    }
+
+    private void loginWithPass() {
+        String mEmail= email.getText().toString().trim();
+        String mPassword = password.getText().toString().trim();
+        if (mEmail.equals("")){
+            email.setError("please enter your email");
+
+        }
+        else if(mPassword.equals("")){
+            password.setError("password cannot be blank");
+        }else {
+            auth.signInWithEmailAndPassword(mEmail, mPassword)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             hideProgressBar();
-                            Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
+                            Log.d(TAG, "onComplete: " + task.isSuccessful());
                             if (!task.isSuccessful()) {
                                 Log.w(TAG, "signInWithEmail", task.getException());
                                 Toast.makeText(LoginActivity.this, "Authentication failed.",
@@ -101,10 +106,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             }
                         }
                     });
-
-                    showProgressBar();
         }
     }
+
     //progress bar
     private void showProgressBar(){
         progressBar.setVisibility(View.VISIBLE);

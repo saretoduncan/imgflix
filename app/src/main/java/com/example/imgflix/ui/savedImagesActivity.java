@@ -20,6 +20,8 @@ import com.example.imgflix.adapters.MyAdapter;
 import com.example.imgflix.models.UnsplashPhotoListResponse;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -30,6 +32,7 @@ public class savedImagesActivity extends AppCompatActivity {
     private DatabaseReference imageDetailsRef;
     private FirebaseRecyclerAdapter<UnsplashPhotoListResponse, FirebaseImagesViewHolder> firebaseAdapter;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     private MyAdapter adapter;
@@ -44,12 +47,18 @@ public class savedImagesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_images);
         ButterKnife.bind(this);
-        imageDetailsRef= FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_CHILD_IMAGES);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        assert user != null;
+        String uid = user.getUid();
+        imageDetailsRef= FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_CHILD_IMAGES)
+        .child(uid);
+
         setUpFirebaseAdapter();
         hideProgressBar();
         showImageDetails();
     }
     private void setUpFirebaseAdapter() {// set up firebase
+          showProgressBar();
         FirebaseRecyclerOptions<UnsplashPhotoListResponse> options = //retrieve save imagedetails
                 new FirebaseRecyclerOptions.Builder<UnsplashPhotoListResponse>()
                         .setQuery(imageDetailsRef, UnsplashPhotoListResponse.class)
@@ -85,6 +94,9 @@ public class savedImagesActivity extends AppCompatActivity {
     }
     private void showImageDetails() {
         recyclerView.setVisibility(View.VISIBLE);
+    }
+    private void showProgressBar(){
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     private void hideProgressBar() {
