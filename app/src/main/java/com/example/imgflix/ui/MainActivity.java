@@ -40,6 +40,7 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 private FirebaseAuth mAuth;
 private FirebaseAuth.AuthStateListener mAuthListener;
+Call<List<UnsplashPhotoListResponse>> call;
  @SuppressLint("NonConstantResourceId")
  @BindView(R.id.recyclerView) RecyclerView recyclerView;
  private MyAdapter adapter;
@@ -69,40 +70,21 @@ private FirebaseAuth.AuthStateListener mAuthListener;
 
             }
         };
+//
+         call = getApiCall("1");
+//        UnsplashPhotosApi client = getClient();
+//        String clientId = Constants.UNSPLASH_API_KEY;
+//        call = client.getImages(clientId, "1", "30");
 
-            Call<List<UnsplashPhotoListResponse>> call = getApiCall();
-
-            call.enqueue(new Callback<List<UnsplashPhotoListResponse>>() {
-                @Override
-                public void onResponse(@NonNull Call<List<UnsplashPhotoListResponse>> call, Response<List<UnsplashPhotoListResponse>> response) {
-                    hideProgressBar();
-                    if (response.isSuccessful()) {
-                        List<UnsplashPhotoListResponse> images = response.body();
-                        adapter = new MyAdapter(MainActivity.this, images);
-                        recyclerView.setAdapter(adapter);
-                        RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL);
-                        recyclerView.setLayoutManager(layoutManager);
-                        recyclerView.setHasFixedSize(true);
-
-                        showImagesContent();
-                    } else {
-                        showUnSuccessfulMessage();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<List<UnsplashPhotoListResponse>> call, Throwable t) {
-                    hideProgressBar();
-                    showFailureMessage();
-
-                }
-            });
+            getCall();
             swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {
-                Intent intent = getIntent();
-                finish();
-                startActivity(intent);
+//                Intent intent = getIntent();
+//                finish();
+//                startActivity(intent);
+                    call= getApiCall("2");
+                    getCloneCall();
 
                     swipeRefreshLayout.setRefreshing(false);
                 }
@@ -156,10 +138,64 @@ public boolean onOptionsItemSelected(MenuItem item){
         progressBar.setVisibility(View.GONE);
 
     }
-    private Call<List<UnsplashPhotoListResponse>> getApiCall(){
+    public void getCall( ){
+        call.enqueue(new Callback<List<UnsplashPhotoListResponse>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<UnsplashPhotoListResponse>> call, Response<List<UnsplashPhotoListResponse>> response) {
+                hideProgressBar();
+                if (response.isSuccessful()) {
+                    List<UnsplashPhotoListResponse> images = response.body();
+                    adapter = new MyAdapter(MainActivity.this, images);
+                    recyclerView.setAdapter(adapter);
+                    RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL);
+                    recyclerView.setLayoutManager(layoutManager);
+                    recyclerView.setHasFixedSize(true);
+
+                    showImagesContent();
+                } else {
+                    showUnSuccessfulMessage();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<UnsplashPhotoListResponse>> call, Throwable t) {
+                hideProgressBar();
+                showFailureMessage();
+
+            }
+        });
+    }
+    public void getCloneCall(){
+        call.clone().enqueue(new Callback<List<UnsplashPhotoListResponse>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<UnsplashPhotoListResponse>> call, Response<List<UnsplashPhotoListResponse>> response) {
+                hideProgressBar();
+                if (response.isSuccessful()) {
+                    List<UnsplashPhotoListResponse> images = response.body();
+                    adapter = new MyAdapter(MainActivity.this, images);
+                    recyclerView.setAdapter(adapter);
+                    RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL);
+                    recyclerView.setLayoutManager(layoutManager);
+                    recyclerView.setHasFixedSize(true);
+
+                    showImagesContent();
+                } else {
+                    showUnSuccessfulMessage();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<UnsplashPhotoListResponse>> call, Throwable t) {
+                hideProgressBar();
+                showFailureMessage();
+
+            }
+        });
+    }
+    private Call<List<UnsplashPhotoListResponse>> getApiCall(String num){
         UnsplashPhotosApi client = getClient();
         String clientId = Constants.UNSPLASH_API_KEY;
-        Call<List<UnsplashPhotoListResponse>> call = client.getImages(clientId, "1", "30");
+        Call<List<UnsplashPhotoListResponse>> call = client.getImages(clientId, num, "30");
         return call;
 
     }
