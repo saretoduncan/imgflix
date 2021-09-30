@@ -3,6 +3,7 @@ package com.example.imgflix.ui;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
@@ -18,6 +19,8 @@ import com.example.imgflix.R;
 import com.example.imgflix.adapters.FirebaseImagesViewHolder;
 import com.example.imgflix.adapters.MyAdapter;
 import com.example.imgflix.models.UnsplashPhotoListResponse;
+import com.example.imgflix.utilities.Item.OnStartDraglistener;
+import com.example.imgflix.utilities.Item.SimpleItemTouchHelperCallBack;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,6 +34,8 @@ import butterknife.ButterKnife;
 public class savedImagesActivity extends AppCompatActivity {
     private DatabaseReference imageDetailsRef;
     private FirebaseRecyclerAdapter<UnsplashPhotoListResponse, FirebaseImagesViewHolder> firebaseAdapter;
+    FireBaseImageListAdapter fireBaseImageListAdapter;
+    ItemTouchHelper touchHelper;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.recyclerView)
@@ -79,6 +84,13 @@ public class savedImagesActivity extends AppCompatActivity {
         };
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerView.setAdapter(firebaseAdapter);
+//        fireBaseImageListAdapter = new FireBaseImageListAdapter(options, imageDetailsRef,(OnStartDraglistener) this,this);
+//        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+//        recyclerView.setAdapter(fireBaseImageListAdapter);
+//        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallBack(fireBaseImageListAdapter);
+//        touchHelper = new ItemTouchHelper(callback);
+//        touchHelper.attachToRecyclerView(recyclerView);
+
     }
     @Override
     protected void onStart(){
@@ -104,4 +116,9 @@ public class savedImagesActivity extends AppCompatActivity {
     }
 
 
+
+//    @Override
+//    public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
+//touchHelper.startDrag(viewHolder);
+//    }
 }

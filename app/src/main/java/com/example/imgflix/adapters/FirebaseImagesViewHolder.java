@@ -53,13 +53,14 @@ public class FirebaseImagesViewHolder extends RecyclerView.ViewHolder implements
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                     imagesDetailsList.add(dataSnapshot.getValue(UnsplashPhotoListResponse.class));
+                }
                     int itemPosition = getLayoutPosition();
                     Intent intent = new Intent(mContext, ImagesDetails.class);
                     intent.putExtra("position", itemPosition+"");
                     intent.putExtra("images", Parcels.wrap(imagesDetailsList));
                     mContext.startActivity(intent);
 
-                }
+
             }
 
             @Override
