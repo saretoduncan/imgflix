@@ -19,8 +19,7 @@ import com.example.imgflix.R;
 import com.example.imgflix.adapters.FirebaseImagesViewHolder;
 import com.example.imgflix.adapters.MyAdapter;
 import com.example.imgflix.models.UnsplashPhotoListResponse;
-import com.example.imgflix.utilities.Item.OnStartDraglistener;
-import com.example.imgflix.utilities.Item.SimpleItemTouchHelperCallBack;
+
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,7 +33,7 @@ import butterknife.ButterKnife;
 public class savedImagesActivity extends AppCompatActivity {
     private DatabaseReference imageDetailsRef;
     private FirebaseRecyclerAdapter<UnsplashPhotoListResponse, FirebaseImagesViewHolder> firebaseAdapter;
-    FireBaseImageListAdapter fireBaseImageListAdapter;
+
     ItemTouchHelper touchHelper;
 
     @SuppressLint("NonConstantResourceId")
