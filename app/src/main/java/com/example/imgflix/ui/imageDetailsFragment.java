@@ -96,6 +96,9 @@ private UnsplashPhotoListResponse images;
         Picasso.get().load(images.getUser().getProfileImage().getMedium()).into(profilePic);
         userName.setText(images.getUser().getName());
         instaName.setText("@"+images.getUser().getInstagramUsername());
+        //animation
+        imageView.setY(-500);
+        imageView.animate().translationY(0).setDuration(1000);
 
         likes.setText(images.getLikes().toString());
         share.setOnClickListener(new View.OnClickListener() {

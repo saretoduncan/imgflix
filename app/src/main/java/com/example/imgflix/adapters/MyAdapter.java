@@ -76,8 +76,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyAdapterViewHolde
            Picasso.get().load(img.getUrls().getRegular()).into(imageView);
            Picasso.get().load(img.getUser().getProfileImage().getMedium()).into(profilePicture);
            textView.setText(img.getUser().getName());
-
-           imageView.animate().alpha(1).setDuration(3000);
+           imageView.setX(-500);
+           imageView.animate().translationX(0).setDuration(1000);
        }
         @Override
         public void onClick(View view){

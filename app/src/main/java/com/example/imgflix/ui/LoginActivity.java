@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,12 +30,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
-    private AnimationDrawable animationDrawable;
+private AnimationDrawable animationDrawable;
     private FirebaseAuth auth;
     private FirebaseAuth.AuthStateListener authStateListener;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.signUp)
     TextView signup;
+
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.loginButton)
     Button loginButton;
@@ -46,6 +48,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     EditText password;
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
+    @BindView(R.id.deltaRelative) RelativeLayout relativeLayout;
 
 
     @Override
@@ -53,6 +56,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+         animationDrawable = (AnimationDrawable) relativeLayout.getBackground();
+        animationDrawable.setEnterFadeDuration(2000);
+        animationDrawable.setExitFadeDuration(2500);
+
+
         auth = FirebaseAuth.getInstance();
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -110,7 +118,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     });
         }
     }
-
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//
+//
+//    }
+//
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        if (animationDrawable != null && animationDrawable.isRunning()) {
+//            // stop the animation
+//            animationDrawable.stop();
+//        }
+//    }
     //progress bar
     private void showProgressBar(){
         progressBar.setVisibility(View.VISIBLE);
@@ -122,6 +144,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onStart(){
         super.onStart();
+        animationDrawable.start();
         auth.addAuthStateListener(authStateListener);
     }
     @Override
@@ -131,4 +154,5 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             auth.removeAuthStateListener(authStateListener);
         }
     }
+
 }
