@@ -1,5 +1,7 @@
 package com.example.imgflix.adapters;
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -11,6 +13,7 @@ import com.example.imgflix.ui.imageDetailsFragment;
 import java.util.List;
 
 public class PagerAdapter extends FragmentPagerAdapter {
+
     private List<UnsplashPhotoListResponse> images;
     public PagerAdapter(@NonNull FragmentManager fm, int behavior, List<UnsplashPhotoListResponse> images) {
         super(fm,behavior);
