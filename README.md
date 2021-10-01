@@ -2,14 +2,16 @@
 
 This is an android application where one can create, share and discover inspirational ideas through images, gifs, and short videos.
 
+<div>
+<img style="width:200px" src="./images/signup.png"/><img style="width:200px" src="./images/signIn.png"/><img style="width:200px" src="./images/main.png"/>
+</div>
+
 ## Built With
 
-- JAVA 
+- JAVA
 - J-UNIT4
 - GRADLE
 - Android studio
-
-
 
 ## Getting Started
 
@@ -22,7 +24,7 @@ A computer with at least 4GB ram.
 ### Setup
 
 - Clone the repository to your folder of choice using Git (or just download all the files)
-- Install JVM 
+- Install JVM
 - Install Android studio
 
 ```
@@ -45,7 +47,6 @@ By Duncan Kipkosgei Moiyo
 Contributions, issues, and feature requests are welcome!
 
 Feel free to check the [issues page](./ISSUE_TEMPLATE/feature_request.md).
-
 
 ## Show your support
 
